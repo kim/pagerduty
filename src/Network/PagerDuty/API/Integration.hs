@@ -11,6 +11,7 @@ module Network.PagerDuty.API.Integration
     , submitEvent
 
     -- * re-exports
+    , Key         (..)
     , ServiceKey
     , IncidentKey
     )
