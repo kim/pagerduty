@@ -10,12 +10,16 @@ where
 import           Control.Applicative
 import           Control.Monad.Reader
 import           Data.Aeson
-import           Data.ByteString            (ByteString)
-import qualified Data.HashMap.Strict        as H
+import           Data.Attoparsec.ByteString.Char8 (takeByteString)
+import           Data.ByteString                  (ByteString)
+import           Data.ByteString.Builder
+import           Data.ByteString.Conversion
+import qualified Data.HashMap.Strict              as H
 import           Data.String
-import           Data.Text                  (Text)
+import           Data.Text                        (Text)
+import           Data.Text.Encoding               (encodeUtf8, decodeUtf8)
 import           GHC.Generics
-import           Network.HTTP.Client        (Manager)
+import           Network.HTTP.Client              (Manager)
 import           Network.PagerDuty.Internal
 
 
@@ -84,6 +88,12 @@ instance FromJSON Error where parseJSON = gFromJson "_"
 
 newtype Key a = Key Text
     deriving (Eq, Show, Generic, IsString)
+
+instance ToByteString (Key a) where
+    builder (Key x) = byteString (encodeUtf8 x)
+
+instance FromByteString (Key a) where
+    parser = Key . decodeUtf8 <$> takeByteString
 
 instance ToJSON   (Key a)
 instance FromJSON (Key a)

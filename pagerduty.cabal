@@ -1,5 +1,5 @@
 name:                  pagerduty
-version:               0.1.0
+version:               0.1.1
 synopsis:              Pager Duty API Client
 homepage:              http://github.com/brendanhay/pagerduty
 license:               OtherLicense
@@ -45,9 +45,11 @@ library
 
     build-depends:
         aeson                     ==0.7.*
+      , attoparsec                >=0.11
       , base                      ==4.*
       , base64-bytestring
       , bytestring
+      , bytestring-conversion     ==0.2.*
       , data-default
       , http-client               ==0.3.*
       , http-client-tls           ==0.2.*
